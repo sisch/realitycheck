@@ -13,25 +13,29 @@ function loadNext(){
   var lastID = minID(divs);
   console.log(lastID);
   //var request = $.ajax("getNextPost/"+(lastID+1));
-  if(lastID>1){
-    $.ajax({
-      type : "GET",
-      url : "/getNextPost/"+(lastID-1)
-    }).done(function(data, textStatus, jqXHR) {
-      var b = $('body');
-      var newEl = b.append(data);
-      $('#more_button').insertAfter(newEl);
-      //activate flattr button
-      FlattrLoader.setup();
+  for (var i = 0; i < 3; i++) {
+    if(lastID>1){
+      $.ajax({
+        type : "GET",
+        url : "/getNextPost/"+(lastID-1)
+      }).done(function(data, textStatus, jqXHR) {
+        var b = $('body');
+        var newEl = b.append(data);
+        $('#more_button').insertAfter(newEl);
+        //activate flattr button
+        FlattrLoader.setup();
+        //return data;
+      }).fail(function(jqXHR, textStatus) {
+        console.log(textStatus);
+        //return null;
+      });
+    }
+    else{
+      $('#more_button').text("No more posts available");
+      $('#more_button').prop("disabled", true);
       //return data;
-    }).fail(function(jqXHR, textStatus) {
-      console.log(textStatus);
-      //return null;
-    });
-  }
-  else{
-    $('#more_button').text("No more posts available");
-    $('#more_button').prop("disabled", true);
-    //return data;
+      i=3;
+    }
+    lastID--;
   }
 }
