@@ -1,3 +1,10 @@
 Show X blog posts
 OnScroll or OnClick load new posts
 OnLoad Remove Posts exceeding limit (top while scrolling down or bottom while scrolling up)
+<<<<<<< HEAD
+=======
+
+* FAV button
+* Flattr
+* view returning single post by timestamp
+>>>>>>> 2c17435f264e0834831aa8c83f0cd39107897818
