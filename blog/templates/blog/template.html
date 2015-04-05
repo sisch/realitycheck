@@ -6,7 +6,7 @@
   {% for p in post_list %}
     <div id="{{ p.id }}" class="post-container panel panel-default">
       <div class="panel-body">
-        <h4 id="{{ p.pub_date|date:"U" }}" class="date panel-heading">{{ p.pub_date|date:"d.m.Y H:i" }} :~: {{ p.title }}</h4>
+        <h4 id="{{ p.pub_date|date:'U' }}" class="date panel-heading">{{ p.pub_date|date:"d.m.Y H:i" }} :~: {{ p.title }}</h4>
         <div class="row">
           <div class="col-md-6 text-panel">
             <div class="panel panel-success">
@@ -21,7 +21,15 @@
             </div>
           </div>
         </div>
-       Test
+        <div class="flattr">
+          <a class="FlattrButton" style="display:none;"
+            title="Test :: {{ p.title }}"
+            data-flattr-uid="PlantProgrammer"
+            data-flattr-button="compact"
+            data-flattr-lang="de_DE"
+            href="#{{ p.pub_date|date:'U' }}"
+          ></a>
+        </div>
       </div>
     </div>
   {% endfor %}
