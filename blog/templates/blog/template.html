@@ -1,0 +1,40 @@
+{% if index %}
+{% include "blog/header.html" %}
+{% endif %}
+
+{% if post_list %}
+  {% for p in post_list %}
+    <div id="{{ p.id }}" class="post-container panel panel-default">
+      <div class="panel-body">
+        <h4 id="{{ p.pub_date|date:"U" }}" class="date panel-heading">{{ p.pub_date|date:"d.m.Y H:i" }} :~: {{ p.title }}</h4>
+        <div class="row">
+          <div class="col-md-6 text-panel">
+            <div class="panel panel-success">
+              <div class="panel-heading"><h2 class="panel-title">Reality</h2></div>
+              <div class="panel-body reality-body">{{ p.reality|safe }}</div>
+            </div>
+          </div>
+          <div class="col-md-6 text-panel">
+            <div class="panel panel-danger">
+              <div class="panel-heading"><h2 class="panel-title">Story</h2></div>
+              <div class="panel-body story-body">{{ p.story|safe }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+
+{% else %}
+  <div id="-1" class="post-container panel panel-default">
+    <div class="panel-body">
+      <h4 id="the_end" class="date panel-heading">No (more) posts available.</h4>
+    </div>
+  </div>
+{% endif %}
+{% if index %}
+    <button id="more_button" type="button" class="btn btn-default btn-lg" onclick="loadNext();">
+      Load Moarrrr ...
+    </button>
+{% include "blog/footer.html" %}
+{% endif %}

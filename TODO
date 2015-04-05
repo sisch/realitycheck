@@ -1,0 +1,3 @@
+Show X blog posts
+OnScroll or OnClick load new posts
+OnLoad Remove Posts exceeding limit (top while scrolling down or bottom while scrolling up)

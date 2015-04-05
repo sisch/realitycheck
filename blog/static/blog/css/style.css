@@ -1,0 +1,33 @@
+body {
+  padding:1%;
+  background-color: #F5F5F5;
+}
+h2 {
+  font-weight: 700;
+}
+
+h4 {
+  font-weight: 700;
+}
+
+.text-panel {
+/*  width:100%;*/
+}
+
+.row {
+  margin-bottom:1.5em;
+}
+
+.reality-body {
+  background-color: #fdb48d;
+  color: #a20e42;
+}
+
+.story-body {
+  background-color: #575d8f;
+  color: #b9aebc;
+}
+
+.panel-heading {
+  text-align: center;
+}
