@@ -21,6 +21,8 @@ function loadNext(){
       var b = $('body');
       var newEl = b.append(data);
       $('#more_button').insertAfter(newEl);
+      //activate flattr button
+      FlattrLoader.setup();
       //return data;
     }).fail(function(jqXHR, textStatus) {
       console.log(textStatus);
