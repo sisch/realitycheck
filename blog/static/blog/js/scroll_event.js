@@ -35,8 +35,6 @@ function loadNext(){
         $('#more_button').text("It broke :(");
         $('#more_button').prop("disabled", true);
       });
-      $('#more_button').text("Load Moarrrr ...");
-      $('#more_button').prop("disabled", false);
     }
     else{
       $('#more_button').text("No more posts available");
