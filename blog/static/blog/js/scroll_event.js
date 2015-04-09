@@ -13,7 +13,7 @@ function loadNext(){
   var lastID = minID(divs);
   console.log(lastID);
   //var request = $.ajax("getNextPost/"+(lastID+1));
-  for (var i = 0; i < 3; i++) {
+  //for (var i = 0; i < 3; i++) {
     if(lastID>1){
       $.ajax({
         type : "GET",
@@ -36,6 +36,6 @@ function loadNext(){
       //return data;
       i=3;
     }
-    lastID--;
-  }
+    //lastID--;
+  //}
 }
