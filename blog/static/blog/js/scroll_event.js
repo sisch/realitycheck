@@ -15,6 +15,8 @@ function loadNext(){
   //var request = $.ajax("getNextPost/"+(lastID+1));
   //for (var i = 0; i < 3; i++) {
     if(lastID>1){
+      $('#more_button').text("Loading ...");
+      $('#more_button').prop("disabled", true);
       $.ajax({
         type : "GET",
         url : "/getNextPost/"+(lastID-1)
@@ -25,9 +27,13 @@ function loadNext(){
         //activate flattr button
         FlattrLoader.setup();
         //return data;
+        $('#more_button').text("Load Moarrrr ...");
+        $('#more_button').prop("disabled", false);
       }).fail(function(jqXHR, textStatus) {
         console.log(textStatus);
         //return null;
+        $('#more_button').text("It broke :(");
+        $('#more_button').prop("disabled", true);
       });
     }
     else{
