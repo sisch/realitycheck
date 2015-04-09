@@ -27,9 +27,13 @@ function loadNext(){
         //activate flattr button
         FlattrLoader.setup();
         //return data;
+        $('#more_button').text("Load Moarrrr ...");
+        $('#more_button').prop("disabled", false);
       }).fail(function(jqXHR, textStatus) {
         console.log(textStatus);
         //return null;
+        $('#more_button').text("It broke :(");
+        $('#more_button').prop("disabled", true);
       });
       $('#more_button').text("Load Moarrrr ...");
       $('#more_button').prop("disabled", false);
