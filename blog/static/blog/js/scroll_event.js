@@ -21,7 +21,7 @@ function loadNext(){
         type : "GET",
         url : "/getNextPost/"+(lastID-1)
       }).done(function(data, textStatus, jqXHR) {
-        var b = $('body');
+        var b = $('#container_main');
         var newEl = b.append(data);
         $('#more_button').insertAfter(newEl);
         //activate flattr button
