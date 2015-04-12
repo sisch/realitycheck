@@ -1,5 +1,5 @@
   </div>
-  {% if not ajax %}
+  {% if home %}
    <div id="container_foot">
     <hr />
     <h4>Links</h4>
@@ -7,6 +7,11 @@
      <span class="badge label-warning">HOME</span>
     </a>
    </div>
+  {% endif %}
+  {% if more_button %}
+   <script type="text/javascript">
+   $('.scroll').jscroll();
+   </script>
   {% endif %}
  </body>
 </html>
