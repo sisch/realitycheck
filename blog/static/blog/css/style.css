@@ -31,3 +31,16 @@ h4 {
 .panel-heading {
   text-align: center;
 }
+
+.permalink {
+  color:#303030;
+  text-decoration: none;
+}
+.permalink h4 span{
+  color: transparent;
+}
+
+.permalink:hover, .permalink:hover h4 span{
+  color: #000000;
+  text-decoration: underline;
+}

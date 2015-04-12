@@ -6,7 +6,7 @@
   {% for p in post_list %}
     <div id="{{ p.id }}" class="post-container panel panel-default">
       <div class="panel-body">
-        <h4 id="{{ p.pub_date|date:'U' }}" class="date panel-heading">{{ p.pub_date|date:"d.m.Y H:i" }} :~: {{ p.title }}</h4>
+        <a href="/api/posts/bytime/{{ p.pub_date|date:'U' }}" class="permalink"><h4 id="{{ p.pub_date|date:'U' }}" class="date panel-heading">{{ p.pub_date|date:"d.m.Y H:i" }} :~: {{ p.title }} <span>¶</span></h4></a>
         <div class="row">
           <div class="col-md-6 text-panel">
             <div class="panel panel-success">
@@ -27,7 +27,7 @@
             data-flattr-uid="PlantProgrammer"
             data-flattr-button="compact"
             data-flattr-lang="de_DE"
-            href="#{{ p.pub_date|date:'U' }}"
+            href="/api/posts/bytime/{{ p.pub_date|date:'U' }}"
           ></a>
         </div>
       </div>
@@ -45,5 +45,6 @@
     <button id="more_button" type="button" class="btn btn-default btn-lg" onclick="loadNext();">
       Load Moarrrr ...
     </button>
-{% include "blog/footer.html" %}
 {% endif %}
+{% include "blog/footer.html" %}
+
