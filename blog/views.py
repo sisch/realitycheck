@@ -22,7 +22,7 @@ def get_next_three_posts(request, id):
     print("%d :: %d"%(latest_id, oldest_id))
     post_list = Post.objects.order_by('pub_date')[oldest_id:latest_id+1]
     posts = reversed(post_list)
-    html = render_to_string('blog/template.html', {'post_list': posts,})
+    html = render_to_string('blog/template.html', {'post_list': posts,'ajax': True, })
     return HttpResponse(html)
 
 def post_detail(request, **kwargs):
