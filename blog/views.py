@@ -13,6 +13,7 @@ def index(request):
         'index' : True,
         'more_button': True,
         'home': True,
+        'load_flattr': False,
     })
     return HttpResponse(template.render(context))
 
@@ -25,6 +26,7 @@ def get_next(request, timestamp):
         'index' : False,
         'more_button': False,
         'home': False,
+        'load_flattr': True,
     })
     return HttpResponse(template.render(context))
 
@@ -44,5 +46,6 @@ def post_detail(request, **kwargs):
         'index' : True,
         'more_button': False,
         'home': True,
+        'load_flattr': False,
     })
     return HttpResponse(template.render(context))
