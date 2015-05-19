@@ -4,6 +4,7 @@
 
 {% if post_list %}
   {% for p in post_list %}
+    {% if not p.hidden %} 
     <div id="{{ p.id }}" class="post-container panel panel-default">
       <div class="panel-body">
         <a href="/api/posts/bytime/{{ p.pub_date|date:'U' }}" class="permalink"><h4 id="{{ p.pub_date|date:'U' }}" class="date panel-heading">{{ p.pub_date|date:"d.m.Y H:i" }} :~: {{ p.title }} <span>¶</span></h4></a>
@@ -33,7 +34,8 @@
       </div>
     </div>
     <a href="/api/posts/getNext/{{ p.pub_date|date:'U' }}" style="display:none;">next</a>
-  {% endfor %}
+{% endif %}  
+{% endfor %}
 {{ p.pub_date }}
 {% else %}
   <div id="-1" class="post-container panel panel-default">

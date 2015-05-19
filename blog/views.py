@@ -19,7 +19,7 @@ def index(request):
 
 def get_next(request, timestamp):
     dt = datetime.datetime.fromtimestamp(float(timestamp))
-    post_list = Post.objects.all().filter(pub_date__lte=dt).order_by('-pub_date')[1:2]
+    post_list = Post.objects.all().filter(pub_date__lte=dt).filter(hidden=False).order_by('-pub_date')[1:2]
     template = loader.get_template('blog/template.html')
     context = RequestContext(request, {
         'post_list': post_list,
