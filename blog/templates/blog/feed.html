@@ -14,10 +14,11 @@
     <id>{{ p.pub_date | date:"U" }}</id>
     <updated>{{ p.pub_date | date:"c"}}</updated>
     <content type="html">
-      <h4>Reality</h4>
-      <p>{{ p.reality }}</p>
-      <h4>Story</h4>
-      <p>{{ p.story }}</p>
+      &lt;h4&gt;Reality&lt;/h4&gt;
+      &lt;p&gt;{{ p.reality }}&lt;/p&gt;
+      &lt;h4&gt;Story&lt;/h4&gt;
+      &lt;p&gt;{{ p.story }}&lt;/p&gt;
+    
     </content>
   </entry>
   {% endfor %}
