@@ -44,3 +44,12 @@ h4 {
   color: #000000;
   text-decoration: underline;
 }
+
+a:hover {
+  color: #a20e42;
+  text-decoration: underline;
+}
+
+a {
+  color: #b9aebc;
+  }
