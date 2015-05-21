@@ -30,6 +30,17 @@ def get_next(request, timestamp):
     })
     return HttpResponse(template.render(context))
 
+def atom_feed(request):
+    dt = datetime.datetime.now()
+    post_list = Post.objects.all().filter(pub_date__lte=dt).filter(hidden=False).order_by('-pub_date')
+    lastPost = post_list[0].pub_date
+    template = loader.get_template('blog/feed.html')
+    context = RequestContext(request, {
+        'post_list': post_list,
+        'datetime': lastPost,
+        })
+    return HttpResponse(template.render(context))
+
 def post_detail(request, **kwargs):
     post_list = None
     if "id" in kwargs:
