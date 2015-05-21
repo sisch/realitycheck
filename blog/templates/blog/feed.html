@@ -5,14 +5,14 @@
     <name>PlantProgrammer</name>
   </author>
   <title>Meine Welt der Dinge</title>
-  <updated>{{ datetime }}</updated>
+  <updated>{{ datetime | date:"c" }}</updated>
 
 {% for p in post_list %}
   <entry>
     <title type="html">{{ p.title }}</title>
     <link href="//realitycheck.pl/api/posts/bytime/{{ p.pub_date|date:'U' }}"/>
     <id>{{ p.pub_date | date:"U" }}</id>
-    <updated>{{ p.pub_date | date:"U"}}</updated>
+    <updated>{{ p.pub_date | date:"c"}}</updated>
     <content type="html">
       <h4>Reality</h4>
       <p>{{ p.reality }}</p>
