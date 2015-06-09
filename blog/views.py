@@ -4,6 +4,7 @@ from django.template.loader import render_to_string
 from django.http import HttpResponse
 from django.utils import feedgenerator
 from blog.models import Post
+from itertools import chain
 import datetime
 
 def index(request):
@@ -51,10 +52,14 @@ def post_detail(request, **kwargs):
     elif "timestamp" in kwargs:
         key = kwargs["timestamp"]
         dt = datetime.datetime.fromtimestamp(float(key))
-        post_list = Post.objects.all().filter(pub_date__gte=dt)[0:1] # pub_date=dt)
+        single_post = Post.objects.all().filter(pub_date__gte=dt)[0:1] # pub_date=dt)
+        post_list = Post.objects.all().filter(hidden=False).exclude(pub_date__exact=single_post.values()[0]['pub_date']).order_by('-pub_date')
+        post_list = chain(single_post, post_list)
+
     template = loader.get_template('blog/template.html')
     context = RequestContext(request, {
         'post_list': post_list,
+        'detail' : True,
         'index' : True,
         'more_button': False,
         'home': True,
