@@ -34,6 +34,10 @@
       </div>
     </div>
     <a href="/api/posts/getNext/{{ p.pub_date|date:'U' }}" style="display:none;">next</a>
+
+    {% if forloop.first and detail %}
+    <hr /><h3>Andere Posts</h3>
+    {% endif %}
 {% endif %}  
 {% endfor %}
 {{ p.pub_date }}
