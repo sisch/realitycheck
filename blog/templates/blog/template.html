@@ -7,7 +7,7 @@
     {% if not p.hidden %} 
     <div id="{{ p.id }}" class="post-container panel panel-default">
       <div class="panel-body">
-        <a href="/api/posts/bytime/{{ p.pub_date|date:'U' }}" class="permalink"><h4 id="{{ p.pub_date|date:'U' }}" class="date panel-heading">{{ p.pub_date|date:"d.m.Y H:i" }} :~: {{ p.title }} <span>¶</span></h4></a>
+        <a href="/post/{{ p.pub_date|date:'U' }}" class="permalink"><h4 id="{{ p.pub_date|date:'U' }}" class="date panel-heading">{{ p.pub_date|date:"d.m.Y H:i" }} :~: {{ p.title }} <span>¶</span></h4></a>
         <div class="row">
           <div class="col-md-6 text-panel">
             <div class="panel panel-success">
