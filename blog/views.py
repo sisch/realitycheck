@@ -34,7 +34,7 @@ def get_next(request, timestamp):
 
 def atom_feed(request):
     dt = datetime.datetime.now()
-    post_list = Post.objects.all().filter(pub_date__lte=dt).filter(hidden=False).order_by('-pub_date')
+    post_list = Post.objects.all().filter(pub_date__lte=dt).filter(hidden=False).order_by('-pub_date')[0:20]
     lastPost = post_list[0].pub_date
     template = loader.get_template('blog/feed.html')
     context = RequestContext(request, {
