@@ -5,8 +5,8 @@ import urllib
 # Register your models here.
 
 class BlogAdmin(admin.ModelAdmin):
-  list_display = ('title','pub_date', 'hidden', 'get_twitter_post')
-  fields = (('title','pub_date','hidden'),('reality','story'))
+  list_display = ('title','pub_date', 'visible', 'get_twitter_post')
+  fields = (('title','pub_date','visible'),('reality','story'))
   def get_twitter_post(self, instance):
     tweet = "Neuer Blogeintrag #RealityCheck:\n"+instance.title+"\n\nhttp://realitycheck.pl/post/{}/".format(int(time.mktime(instance.pub_date.timetuple())))+"\n\n({} / {})".format(instance.reality_wordcount, instance.story_wordcount)
     return "<a href='https://twitter.com/intent/tweet?text={}'>Tweet this</a>".format(urllib.quote(tweet.encode("utf-8")))

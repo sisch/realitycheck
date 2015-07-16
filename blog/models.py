@@ -9,7 +9,7 @@ class Post(models.Model):
   reality = models.TextField(max_length=2500)
   story = models.TextField(max_length=2500)
   pub_date = models.DateTimeField('date published')
-  hidden = models.BooleanField(default=False)
+  visible = models.BooleanField(default=True)
 
   @property
   def reality_wordcount(self):
