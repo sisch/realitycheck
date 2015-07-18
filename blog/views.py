@@ -21,7 +21,7 @@ def index(request):
 
 def get_next(request, timestamp):
     dt = datetime.datetime.fromtimestamp(float(timestamp))
-    post_list = Post.objects.all().filter(pub_date__lte=dt).filter(visible=False).order_by('-pub_date')[1:2]
+    post_list = Post.objects.all().filter(pub_date__lte=dt).filter(visible=True).order_by('-pub_date')[1:2]
     template = loader.get_template('blog/template.html')
     context = RequestContext(request, {
         'post_list': post_list,
@@ -34,7 +34,7 @@ def get_next(request, timestamp):
 
 def atom_feed(request):
     dt = datetime.datetime.now()
-    post_list = Post.objects.all().filter(pub_date__lte=dt).filter(visible=False).order_by('-pub_date')[0:20]
+    post_list = Post.objects.all().filter(pub_date__lte=dt).filter(visible=True).order_by('-pub_date')[0:20]
     lastPost = post_list[0].pub_date
     template = loader.get_template('blog/feed.html')
     context = RequestContext(request, {
@@ -53,7 +53,7 @@ def post_detail(request, **kwargs):
         key = kwargs["timestamp"]
         dt = datetime.datetime.fromtimestamp(float(key))
         single_post = Post.objects.all().filter(pub_date__gte=dt)[0:1] # pub_date=dt)
-        post_list = Post.objects.all().filter(visible=False).exclude(pub_date__exact=single_post.values()[0]['pub_date']).order_by('-pub_date')[:4]
+        post_list = Post.objects.all().filter(visible=True).exclude(pub_date__exact=single_post.values()[0]['pub_date']).order_by('-pub_date')[:4]
         post_list = chain(single_post, post_list)
 
     template = loader.get_template('blog/template.html')
