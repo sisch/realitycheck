@@ -26,6 +26,7 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = ['']
 
+STATIC_URL="/static/"
 
 # Application definition
 
@@ -77,6 +78,10 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+CLICKY_SITE_ID='00000000'
+GOOGLE_ANALYTICS_PROPERTY_ID='UA-000000-0'
+GOOGLE_ANALYTICS_SITE_SPEED=False
 
 try:
     from .settings_production import *

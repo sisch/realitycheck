@@ -15,7 +15,12 @@
   {% endif %}
   {% if load_flattr %}
     <script type="text/javascript">
-      FlattrLoader.setup();
+      try{
+        FlattrLoader.setup();
+      }
+      catch(e){
+        
+      }
     </script>
   {% endif %}
 
