@@ -1,0 +1,4 @@
+Django==1.8
+Pillow==2.9.0
+django-analytical==0.20.0
+wsgiref==0.1.2
