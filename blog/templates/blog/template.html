@@ -4,7 +4,6 @@
 
 {% if post_list %}
   {% for p in post_list %}
-    {% if not p.hidden %} 
     <div id="{{ p.id }}" class="post-container panel panel-default">
       <div class="panel-body">
         <a href="/post/{{ p.pub_date|date:'U' }}" class="permalink"><h4 id="{{ p.pub_date|date:'U' }}" class="date panel-heading">{{ p.pub_date|date:"d.m.Y H:i" }} :~: {{ p.title }} <span>¶</span></h4></a>
@@ -46,7 +45,6 @@
     {% if forloop.first and detail %}
     <hr /><h3>Andere Posts</h3>
     {% endif %}
-{% endif %}  
 {% endfor %}
 {{ p.pub_date }}
 {% else %}
