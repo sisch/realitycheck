@@ -8,7 +8,8 @@ from itertools import chain
 import datetime
 
 def index(request):
-    post_list = Post.objects.order_by('-pub_date').filter(visible=True)[:5]
+    dt = datetime.datetime.now()
+    post_list = Post.objects.order_by('-pub_date').filter(pub_date__lte=dt).filter(visible=True)[:5]
     template = loader.get_template('blog/template.html')
     context = RequestContext(request, {
         'post_list': post_list,
