@@ -50,6 +50,16 @@ a:hover {
   text-decoration: underline;
 }
 
-a {
+.reality-body div a {
+  color: #575d8f;
+  }
+
+.story-body div a {
   color: #a20e42;
   }
+
+img {
+    min-width:150px;
+    max-width:350px;
+    width: 30%;
+}
