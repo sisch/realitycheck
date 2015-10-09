@@ -37,6 +37,7 @@
             href="/api/posts/bytime/{{ p.pub_date|date:'U' }}"
           ></a>
         </div>
+        <div><a href="https://twitter.com/intent/tweet?text={{ p.title }}%0A%0Ahttp%3A//realitycheck.pl/post/{{ p.pub_date|date:'U' }}/">🐦Tweet this</a></div>
       </div>
     </div>
     <a href="/api/posts/getNext/{{ p.pub_date|date:'U' }}" style="display:none;">next</a>
