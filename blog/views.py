@@ -1,8 +1,5 @@
-from django.shortcuts import render
 from django.template import RequestContext, loader
-from django.template.loader import render_to_string
 from django.http import HttpResponse
-from django.utils import feedgenerator
 from blog.models import Post
 from itertools import chain
 import datetime
@@ -18,6 +15,7 @@ def index(request):
         'more_button': True,
         'home': True,
         'load_flattr': False,
+        'active_page': 'index',
     })
     return HttpResponse(template.render(context))
 
@@ -52,6 +50,7 @@ def post_random(request):
 def post_detail(request, **kwargs):
     single_post = None
     now = datetime.datetime.now()
+    active_menu_entry = ''
     if "id" in kwargs:
         # -1 offset, because ids are 1-indexed in rendered HTML file
         id = max(int(kwargs["id"]) - 1, 0)
@@ -64,6 +63,7 @@ def post_detail(request, **kwargs):
         ids = Post.objects.all().values_list('id', flat=True)
         random_id = random.choice(list(ids))
         single_post = Post.objects.filter(id=random_id)
+        active_menu_entry = 'random'
     post_list = Post.objects.all().filter(visible=True).filter(pub_date__lte=now).exclude(pub_date__exact=single_post.values()[0]['pub_date']).order_by('-pub_date')[:4]
     post_list = chain(single_post, post_list)
 
@@ -75,5 +75,12 @@ def post_detail(request, **kwargs):
         'more_button': True,
         'home': True,
         'load_flattr': False,
+        'active_page': active_menu_entry,
     })
+    return HttpResponse(template.render(context))
+
+
+def contact(request):
+    template = loader.get_template('blog/template.html')
+    context = RequestContext(request, {'active_page': 'imprint','index':True})
     return HttpResponse(template.render(context))

@@ -1,7 +1,6 @@
 {% if index %}
 {% include "blog/header.html" %}
 {% endif %}
-
 {% if post_list %}
   {% for p in post_list %}
     <div id="{{ p.id }}" class="post-container panel panel-default">
@@ -48,11 +47,24 @@
 {% endfor %}
 {{ p.pub_date }}
 {% else %}
-  <div id="-1" class="post-container panel panel-default">
-    <div class="panel-body">
-      <h4 id="the_end" class="date panel-heading">No (more) posts available.</h4>
-    </div>
-  </div>
+    {% if active_page == 'imprint' %}
+        <div class="panel panel-default">
+        <div class="panel-body">
+          <h4 class="panel-heading">Ich bin erreichbar unter:</h4>
+            <ul>
+                <li>Twitter: <a href="https://twitter.com/PlantProgrammer">@PlantProgrammer</a></li>
+                <li>E-Mail: <a href="mailto:">-Noch nicht eingerichtet-</a></li>
+                <li>ask.fm: <a href="https://ask.fm/PlantProgrammer">PlantProgrammer</a></li>
+            </ul>
+        </div>
+      </div>
+    {% else %}
+      <div id="-1" class="post-container panel panel-default">
+        <div class="panel-body">
+          <h4 id="the_end" class="date panel-heading">No (more) posts available.</h4>
+        </div>
+      </div>
+    {% endif %}
 {% endif %}
 {% include "blog/footer.html" %}
 

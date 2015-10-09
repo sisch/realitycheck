@@ -9,5 +9,6 @@ urlpatterns = patterns('',
     url(r'^post/(?P<timestamp>\d+)/$', views.post_detail, name='postDetailTimestamp'),
     url(r'^post/random/$', views.post_random, name='postRandom'),
     url(r'^feed(?:.xml)?/?$', views.atom_feed, name='feed'),
+    url(r'^impressum/$', views.contact, name="imprint"),
     url(r'^$', views.index, name="index"),
 )
