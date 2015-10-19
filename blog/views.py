@@ -67,12 +67,14 @@ def post_detail(request, **kwargs):
     post_list = Post.objects.all().filter(visible=True).filter(pub_date__lte=now).exclude(pub_date__exact=single_post.values()[0]['pub_date']).order_by('-pub_date')[:4]
     post_list = chain(single_post, post_list)
 
+    twitter_description = single_post.values()[0]['reality']
+
     template = loader.get_template('blog/template.html')
     context = RequestContext(request, {
         'post_list': post_list,
         'twitter_card': {
             'title': single_post.values()[0]['title'],
-            'description': single_post.values()[0]['reality'][:60]},
+            'description': twitter_description[:60] + ("..." if len(twitter_description)>60 else "") },
         'detail': True,
         'index': True,
         'more_button': True,
