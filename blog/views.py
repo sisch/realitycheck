@@ -70,8 +70,11 @@ def post_detail(request, **kwargs):
     template = loader.get_template('blog/template.html')
     context = RequestContext(request, {
         'post_list': post_list,
-        'detail' : True,
-        'index' : True,
+        'twitter_card': {
+            'title': single_post.values()[0]['title'],
+            'description': single_post.values()[0]['reality'][:60]},
+        'detail': True,
+        'index': True,
         'more_button': True,
         'home': True,
         'load_flattr': False,
