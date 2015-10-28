@@ -74,7 +74,7 @@ def post_detail(request, **kwargs):
         'post_list': post_list,
         'twitter_card': {
             'title': single_post.values()[0]['title'],
-            'description': twitter_description[:60] + ("..." if len(twitter_description)>60 else "") },
+            'description': twitter_description[:100] + ("..." if len(twitter_description) > 100 else "")},
         'detail': True,
         'index': True,
         'more_button': True,
