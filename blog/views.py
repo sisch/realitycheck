@@ -90,24 +90,27 @@ def post_detail(request, **kwargs):
 
 
 def search(request, **kwargs):
-    from django.db.models import Q
-    post_list = Post.objects.filter(
-        Q(title__search=kwargs['searchterm']) |
-        Q(reality__search=kwargs['searchterm']) |
-        Q(story__search=kwargs['searchterm'])
-    )
-    template = loader.get_template('blog/template.html')
-    context = RequestContext(
-        request, {
-        'post_list': post_list,
-        'detail': False,
-        'index': True,
-        'more_button': False,
-        'home': False,
-        'load_flattr': True,
-        'active_page': 'search',
-    })
-    return HttpResponse(template.render(context))
+    if 'searchterm' in kwargs:
+        searchterm = kwargs.get('searchterm','')
+        from django.db.models import Q
+        print(kwargs['searchterm'])
+        post_list = Post.objects.filter(title__search=searchterm) | \
+            Post.objects.filter(reality__search=searchterm) | \
+            Post.objects.filter(story__search=searchterm)
+        template = loader.get_template('blog/template.html')
+        context = RequestContext(
+            request, {
+            'post_list': post_list,
+            'detail': False,
+            'index': True,
+            'more_button': False,
+            'home': False,
+            'load_flattr': True,
+            'active_page': 'search',
+            'searchterm': searchterm,
+        })
+        return HttpResponse(template.render(context))
+    return HttpResponse()
 
 
 def contact(request):
