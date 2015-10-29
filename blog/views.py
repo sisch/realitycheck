@@ -91,7 +91,7 @@ def post_detail(request, **kwargs):
 
 def search(request, **kwargs):
     if 'searchterm' in kwargs:
-        searchterm = kwargs.get('searchterm','')
+        searchterm = kwargs.get('searchterm','').rstrip("/")
         from django.db.models import Q
         print(kwargs['searchterm'])
         post_list = Post.objects.filter(title__search=searchterm) | \
