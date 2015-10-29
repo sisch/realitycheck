@@ -91,9 +91,7 @@ def post_detail(request, **kwargs):
 
 def search(request, **kwargs):
     if 'searchterm' in kwargs:
-        searchterm = kwargs.get('searchterm', '').rstrip("/").decode("utf-8")
-        from django.db.models import Q
-        print(kwargs['searchterm'])
+        searchterm = unicode(kwargs.get('searchterm', "").rstrip("/"))
         post_list = Post.objects.filter(title__search=searchterm) | \
             Post.objects.filter(reality__search=searchterm) | \
             Post.objects.filter(story__search=searchterm)
