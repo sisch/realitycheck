@@ -5,6 +5,7 @@ from itertools import chain
 import datetime
 import random
 
+
 def index(request):
     dt = datetime.datetime.now()
     post_list = Post.objects.order_by('-pub_date').filter(pub_date__lte=dt).filter(visible=True)[:5]
@@ -19,6 +20,7 @@ def index(request):
     })
     return HttpResponse(template.render(context))
 
+
 def get_next(request, timestamp):
     dt = datetime.datetime.fromtimestamp(float(timestamp))
     post_list = Post.objects.all().filter(pub_date__lte=dt).filter(visible=True).order_by('-pub_date')[1:2]
@@ -32,6 +34,7 @@ def get_next(request, timestamp):
     })
     return HttpResponse(template.render(context))
 
+
 def atom_feed(request):
     dt = datetime.datetime.now()
     post_list = Post.objects.all().filter(pub_date__lte=dt).filter(visible=True).order_by('-pub_date')[0:20]
@@ -42,6 +45,7 @@ def atom_feed(request):
         'datetime': lastPost,
         })
     return HttpResponse(template.render(context))
+
 
 def post_random(request):
     return post_detail(request, random=True)
@@ -81,6 +85,26 @@ def post_detail(request, **kwargs):
         'home': True,
         'load_flattr': False,
         'active_page': active_menu_entry,
+    })
+    return HttpResponse(template.render(context))
+
+
+def search(request, **kwargs):
+    from django.db.models import Q
+    post_list = Post.objects.filter(
+        Q(title__search=kwargs['searchterm']) |
+        Q(reality__search=kwargs['searchterm']) |
+        Q(story__search=kwargs['searchterm'])
+    )
+    template = loader.get_template('blog/template.html')
+    context = RequestContext(
+        request, {
+        'post_list': post_list,
+        'detail': True,
+        'index': True,
+        'more_button': True,
+        'home': True,
+        'load_flattr': False,
     })
     return HttpResponse(template.render(context))
 
