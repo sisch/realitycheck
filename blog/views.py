@@ -100,11 +100,12 @@ def search(request, **kwargs):
     context = RequestContext(
         request, {
         'post_list': post_list,
-        'detail': True,
+        'detail': False,
         'index': True,
-        'more_button': True,
-        'home': True,
-        'load_flattr': False,
+        'more_button': False,
+        'home': False,
+        'load_flattr': True,
+        'active_page': 'search',
     })
     return HttpResponse(template.render(context))
 
