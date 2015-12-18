@@ -10,7 +10,7 @@
 {% for p in post_list %}
   <entry>
     <title type="html">{{ p.title }}</title>
-    <link href="//realitycheck.pl/api/posts/bytime/{{ p.pub_date|date:'U' }}"/>
+    <link href="//realitycheck.pl/post/{{ p.pub_date|date:'U' }}"/>
     <id>{{ p.pub_date | date:"U" }}</id>
     <updated>{{ p.pub_date | date:"c"}}</updated>
     <content type="html">
@@ -18,7 +18,7 @@
       &lt;p&gt;{{ p.reality }}&lt;/p&gt;
       &lt;h4&gt;Story&lt;/h4&gt;
       &lt;p&gt;{{ p.story }}&lt;/p&gt;
-    
+
     </content>
   </entry>
   {% endfor %}
