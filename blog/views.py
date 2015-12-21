@@ -111,6 +111,12 @@ def search(request, **kwargs):
     return HttpResponse()
 
 
+def sitemap(request):
+    template = loader.get_template('blog/sitemap.html')
+    context = RequestContext(request, {'post_list': post_list})
+    return HttpResponse(template.render(context))
+
+
 def contact(request):
     template = loader.get_template('blog/template.html')
     context = RequestContext(request, {'active_page': 'imprint','index':True})

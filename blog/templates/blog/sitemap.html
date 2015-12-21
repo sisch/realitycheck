@@ -1,0 +1,11 @@
+https://realitycheck.pl/
+https://realitycheck.pl/impressum/
+https://realitycheck.pl/feed
+https://realitycheck.pl/post/random/
+
+{% if post_list %}
+  {% for p in post_list %}
+    https://realitycheck.pl/post/{{ p.pub_date|date:'U' }}
+    
+  {% endfor %}
+{% endif %}
