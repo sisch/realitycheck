@@ -112,6 +112,7 @@ def search(request, **kwargs):
 
 
 def sitemap(request):
+    post_list = Post.objects.order_by('-pub_date').filter(pub_date__lte=dt).filter(visible=True)
     template = loader.get_template('blog/sitemap.html')
     context = RequestContext(request, {'post_list': post_list})
     return HttpResponse(template.render(context))
