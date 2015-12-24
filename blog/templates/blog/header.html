@@ -1,9 +1,9 @@
 <!doctype html>{% load staticfiles %}{% load clicky %}{% load google_analytics %}
-<HTML lang="de">
- <HEAD>
+<html lang="de">
+ <head>
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
-  {% if active_menu_entry == 'random' %}
+  {% if active_page == 'random' %}
      <meta name="robots" content="noindex, nofollow" >
   {% endif %}
      <!-- Code to display as Twitter Card -->
@@ -23,11 +23,15 @@
   <link rel="alternate" type="application/atom+xml" title="RealityCheck Feed" href="//realitycheck.pl/feed/" />
   <link rel="stylesheet" type="text/css" href="{% static 'blog/css/bootstrap.min.css' %}" />
   <link rel="stylesheet" type="text/css" href="{% static 'blog/css/style.css' %}?20151009_113225" />
-  <TITLE>Meine Welt der Dinge</title>
+  <title>Meine Welt der Dinge
+     {% if detail %}
+         :: {{ twitter_card.title }}
+     {% endif %}
+  </title>
   {% clicky %}
   {% google_analytics %}
   </head>
-  <BODY>
+  <body>
   <!-- NAV BAR -->
   <nav class="navbar navbar-default navbar-static-top">
   <div class="container-fluid">
