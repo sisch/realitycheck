@@ -1,8 +1,11 @@
 <!doctype html>{% load staticfiles %}{% load clicky %}{% load google_analytics %}
-<HTML>
+<HTML lang="de">
  <HEAD>
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+  {% if active_menu_entry == 'random' %}
+     <meta name="robots" content="noindex, nofollow" >
+  {% endif %}
      <!-- Code to display as Twitter Card -->
      {% if detail %}
      <meta name="twitter:card" content="summary" />
@@ -16,6 +19,7 @@
   <script src="{% static 'blog/js/flattr.js' %}"></script>
   <script src="{% static 'blog/js/jscroll-2.2.4.min.js' %}"></script>
   <script src="{% static 'blog/js/searchbar.js' %}"></script>
+  <link rel="canonical" href="https://realitycheck.pl/{{ canonical_suffix }}" />
   <link rel="alternate" type="application/atom+xml" title="RealityCheck Feed" href="//realitycheck.pl/feed/" />
   <link rel="stylesheet" type="text/css" href="{% static 'blog/css/bootstrap.min.css' %}" />
   <link rel="stylesheet" type="text/css" href="{% static 'blog/css/style.css' %}?20151009_113225" />
