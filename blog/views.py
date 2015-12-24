@@ -3,11 +3,15 @@ from django.http import HttpResponse
 from blog.models import Post
 from itertools import chain
 import datetime
+import django.utils.timezone as timezone
+import time
 import random
 
 
 def index(request):
-    dt = datetime.datetime.now()
+    dt = timezone.now()
+    print(time.mktime(dt.timetuple()))
+
     post_list = Post.objects.order_by('-pub_date').filter(pub_date__lte=dt).filter(visible=True)[:5]
     template = loader.get_template('blog/template.html')
     context = RequestContext(request, {
@@ -17,12 +21,13 @@ def index(request):
         'home': True,
         'load_flattr': False,
         'active_page': 'index',
+	'canonical_suffix': '',
     })
     return HttpResponse(template.render(context))
 
 
 def get_next(request, timestamp):
-    dt = datetime.datetime.fromtimestamp(float(timestamp))
+    dt = timezone.make_aware(float(timestamp), timezone.get_current_timezone())
     post_list = Post.objects.all().filter(pub_date__lte=dt).filter(visible=True).order_by('-pub_date')[1:2]
     template = loader.get_template('blog/template.html')
     context = RequestContext(request, {
@@ -36,7 +41,7 @@ def get_next(request, timestamp):
 
 
 def atom_feed(request):
-    dt = datetime.datetime.now()
+    dt = timezone.now()
     post_list = Post.objects.all().filter(pub_date__lte=dt).filter(visible=True).order_by('-pub_date')[0:20]
     lastPost = post_list[0].pub_date
     template = loader.get_template('blog/feed.html')
@@ -53,7 +58,7 @@ def post_random(request):
 
 def post_detail(request, **kwargs):
     single_post = None
-    now = datetime.datetime.now()
+    now = timezone.now()
     active_menu_entry = ''
     if "id" in kwargs:
         # -1 offset, because ids are 1-indexed in rendered HTML file
@@ -72,6 +77,8 @@ def post_detail(request, **kwargs):
     post_list = chain(single_post, post_list)
 
     twitter_description = single_post.values()[0]['reality']
+    canonical_suffix = "{}/".format(int(time.mktime(single_post.values()[0]['pub_date'].timetuple())+3600))
+    print(canonical_suffix)
 
     template = loader.get_template('blog/template.html')
     context = RequestContext(request, {
@@ -85,6 +92,7 @@ def post_detail(request, **kwargs):
         'home': True,
         'load_flattr': False,
         'active_page': active_menu_entry,
+        'canonical_suffix': canonical_suffix,
     })
     return HttpResponse(template.render(context))
 
@@ -96,6 +104,7 @@ def search(request, **kwargs):
             Post.objects.filter(reality__search=searchterm) | \
             Post.objects.filter(story__search=searchterm)
         template = loader.get_template('blog/template.html')
+        canonical_suffix = "{}/".format(int(time.mktime(post_list.values()[0]['pub_date'].timetuple())+3600))
         context = RequestContext(
             request, {
             'post_list': post_list,
@@ -106,13 +115,14 @@ def search(request, **kwargs):
             'load_flattr': True,
             'active_page': 'search',
             'searchterm': searchterm,
+            'canonical_suffix': canonical_suffix,
         })
         return HttpResponse(template.render(context))
     return HttpResponse()
 
 
 def sitemap(request):
-    dt = datetime.datetime.now()
+    dt = timezone.now()
     post_list = Post.objects.order_by('-pub_date').filter(pub_date__lte=dt).filter(visible=True)
     template = loader.get_template('blog/sitemap.html')
     context = RequestContext(request, {'post_list': post_list})
@@ -121,5 +131,5 @@ def sitemap(request):
 
 def contact(request):
     template = loader.get_template('blog/template.html')
-    context = RequestContext(request, {'active_page': 'imprint','index':True})
+    context = RequestContext(request, {'active_page': 'imprint','index':True,'canonical_suffix': 'impressum/'})
     return HttpResponse(template.render(context))
