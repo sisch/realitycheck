@@ -104,7 +104,8 @@ def search(request, **kwargs):
             Post.objects.filter(reality__search=searchterm) | \
             Post.objects.filter(story__search=searchterm)
         template = loader.get_template('blog/template.html')
-        canonical_suffix = "{}/".format(int(time.mktime(post_list.values()[0]['pub_date'].timetuple())+3600))
+        if len(post_list)>0:
+            canonical_suffix = "{}/".format(int(time.mktime(post_list.values()[0]['pub_date'].timetuple())+3600))
         context = RequestContext(
             request, {
             'post_list': post_list,
