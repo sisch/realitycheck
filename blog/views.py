@@ -7,7 +7,6 @@ import django.utils.timezone as timezone
 import time
 import random
 
-
 def index(request):
     dt = timezone.now()
     print(time.mktime(dt.timetuple()))
@@ -27,7 +26,7 @@ def index(request):
 
 
 def get_next(request, timestamp):
-    dt = timezone.make_aware(float(timestamp), timezone.get_current_timezone())
+    dt = timezone.make_aware(timezone.datetime.fromtimestamp(float(timestamp)))
     post_list = Post.objects.all().filter(pub_date__lte=dt).filter(visible=True).order_by('-pub_date')[1:2]
     template = loader.get_template('blog/template.html')
     context = RequestContext(request, {
