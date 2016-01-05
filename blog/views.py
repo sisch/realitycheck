@@ -9,7 +9,6 @@ import random
 
 def index(request):
     dt = timezone.now()
-    print(time.mktime(dt.timetuple()))
 
     post_list = Post.objects.order_by('-pub_date').filter(pub_date__lte=dt).filter(visible=True)[:5]
     template = loader.get_template('blog/template.html')
@@ -26,7 +25,7 @@ def index(request):
 
 
 def get_next(request, timestamp):
-    dt = timezone.make_aware(timezone.datetime.fromtimestamp(float(timestamp)))
+    dt = timezone.make_aware(timezone.datetime.fromtimestamp(float(timestamp)), timezone=timezone.get_current_timezone())
     post_list = Post.objects.all().filter(pub_date__lte=dt).filter(visible=True).order_by('-pub_date')[1:2]
     template = loader.get_template('blog/template.html')
     context = RequestContext(request, {
