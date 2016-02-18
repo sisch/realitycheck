@@ -76,14 +76,20 @@ def post_detail(request, **kwargs):
 
     twitter_description = single_post.values()[0]['reality']
     canonical_suffix = "{}/".format(int(time.mktime(single_post.values()[0]['pub_date'].timetuple())+3600))
-    print(canonical_suffix)
-
+    twitter_card = {
+            'title': single_post.values()[0]['title'],
+            'description': twitter_description[:100] + ("..." if len(twitter_description) > 100 else "")
+    }
+    if "random" in kwargs:
+        canonical_suffix = "post/random/"
+        twitter_card = {
+            'title': "random post",
+            'description': "... surprise ..."
+        }
     template = loader.get_template('blog/template.html')
     context = RequestContext(request, {
         'post_list': post_list,
-        'twitter_card': {
-            'title': single_post.values()[0]['title'],
-            'description': twitter_description[:100] + ("..." if len(twitter_description) > 100 else "")},
+        'twitter_card': twitter_card,
         'detail': True,
         'index': True,
         'more_button': True,
