@@ -12,6 +12,6 @@ urlpatterns = patterns('',
     url(r'^feed(?:.xml)?/?$', views.atom_feed, name='feed'),
     url(r'^impressum/$', views.contact, name="imprint"),
     url(r'^sitemap(?:.txt)?/?$', views.sitemap, name="sitemap"),
-    url(r'^search/(?P<searchterm>.*)$', views.search, name="search"),
+    url(r'^search/$', views.search, name="search"),
     url(r'^$', views.index, name="index"),
 )

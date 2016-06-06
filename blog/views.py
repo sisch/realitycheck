@@ -1,5 +1,7 @@
 from django.template import RequestContext, loader
 from django.http import HttpResponse
+from django.db.models import Q
+from django.shortcuts import redirect
 from blog.models import Post
 from itertools import chain
 import datetime
@@ -102,11 +104,11 @@ def post_detail(request, **kwargs):
 
 
 def search(request, **kwargs):
-    if 'searchterm' in kwargs:
-        searchterm = unicode(kwargs.get('searchterm', "").rstrip("/"))
-        post_list = Post.objects.filter(title__search=searchterm) | \
-            Post.objects.filter(reality__search=searchterm) | \
-            Post.objects.filter(story__search=searchterm)
+    if 'q' in request.GET:
+        searchterm = request.GET['q']
+        post_list = Post.objects.filter(Q(title__icontains=searchterm) | \
+            Q(reality__icontains=searchterm) | \
+            Q(story__icontains=searchterm))
         template = loader.get_template('blog/template.html')
         canonical_suffix = ""
         if len(post_list)>0:
@@ -124,7 +126,7 @@ def search(request, **kwargs):
             'canonical_suffix': canonical_suffix,
         })
         return HttpResponse(template.render(context))
-    return HttpResponse()
+    return redirect('postRandom')
 
 
 def sitemap(request):
