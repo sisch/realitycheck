@@ -1,8 +1,8 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
 from blog import views
 
-urlpatterns = patterns('',
+urlpatterns = [
     url(r'^api/posts/bytime/(?P<timestamp>\d+)/$', views.post_detail, name='postDetailByTime'),
     url(r'^api/posts/getNext/(?P<timestamp>\d+)/$', views.get_next, name='getNext'),
     url(r'^api/posts/(?P<id>\d+)/$', views.post_detail, name='postDetailByID'),
@@ -14,4 +14,4 @@ urlpatterns = patterns('',
     url(r'^sitemap(?:.txt)?/?$', views.sitemap, name="sitemap"),
     url(r'^search/$', views.search, name="search"),
     url(r'^$', views.index, name="index"),
-)
+]

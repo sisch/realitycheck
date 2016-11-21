@@ -1,4 +1,5 @@
-from django.template import RequestContext, loader
+from django.template import Context
+from django.template.loader import get_template
 from django.http import HttpResponse
 from django.db.models import Q
 from django.shortcuts import redirect
@@ -13,8 +14,8 @@ def index(request):
     dt = timezone.now()
 
     post_list = Post.objects.order_by('-pub_date').filter(pub_date__lte=dt).filter(visible=True)[:5]
-    template = loader.get_template('blog/template.html')
-    context = RequestContext(request, {
+    template = get_template('blog/template.html')
+    context = {
         'post_list': post_list,
         'index' : True,
         'more_button': True,
@@ -22,34 +23,34 @@ def index(request):
         'load_flattr': False,
         'active_page': 'index',
 	'canonical_suffix': '',
-    })
-    return HttpResponse(template.render(context))
+    }
+    return HttpResponse(template.render(context, request))
 
 
 def get_next(request, timestamp):
     dt = timezone.make_aware(timezone.datetime.fromtimestamp(float(timestamp)), timezone=timezone.get_current_timezone())
     post_list = Post.objects.all().filter(pub_date__lte=dt).filter(visible=True).order_by('-pub_date')[1:2]
-    template = loader.get_template('blog/template.html')
-    context = RequestContext(request, {
+    template = get_template('blog/template.html')
+    context = {
         'post_list': post_list,
         'index' : False,
         'more_button': False,
         'home': False,
         'load_flattr': True,
-    })
-    return HttpResponse(template.render(context))
+    }
+    return HttpResponse(template.render(context,request))
 
 
 def atom_feed(request):
     dt = timezone.now()
     post_list = Post.objects.all().filter(pub_date__lte=dt).filter(visible=True).order_by('-pub_date')[0:20]
     lastPost = post_list[0].pub_date
-    template = loader.get_template('blog/feed.html')
-    context = RequestContext(request, {
+    template = get_template('blog/feed.html')
+    context = {
         'post_list': post_list,
         'datetime': lastPost,
-        })
-    return HttpResponse(template.render(context))
+        }
+    return HttpResponse(template.render(context, request))
 
 
 def post_random(request):
@@ -88,8 +89,8 @@ def post_detail(request, **kwargs):
             'title': "random post",
             'description': "... surprise ..."
         }
-    template = loader.get_template('blog/template.html')
-    context = RequestContext(request, {
+    template = get_template('blog/template.html')
+    context = {
         'post_list': post_list,
         'twitter_card': twitter_card,
         'detail': True,
@@ -99,8 +100,8 @@ def post_detail(request, **kwargs):
         'load_flattr': False,
         'active_page': active_menu_entry,
         'canonical_suffix': canonical_suffix,
-    })
-    return HttpResponse(template.render(context))
+    }
+    return HttpResponse(template.render(context, request))
 
 
 def search(request, **kwargs):
@@ -109,12 +110,11 @@ def search(request, **kwargs):
         post_list = Post.objects.filter(Q(title__icontains=searchterm) | \
             Q(reality__icontains=searchterm) | \
             Q(story__icontains=searchterm))
-        template = loader.get_template('blog/template.html')
+        template = get_template('blog/template.html')
         canonical_suffix = ""
         if len(post_list)>0:
             canonical_suffix = "{}/".format(int(time.mktime(post_list.values()[0]['pub_date'].timetuple())+3600))
-        context = RequestContext(
-            request, {
+        context = {
             'post_list': post_list,
             'detail': False,
             'index': True,
@@ -124,20 +124,20 @@ def search(request, **kwargs):
             'active_page': 'search',
             'searchterm': searchterm,
             'canonical_suffix': canonical_suffix,
-        })
-        return HttpResponse(template.render(context))
+        }
+        return HttpResponse(template.render(context, request))
     return redirect('postRandom')
 
 
 def sitemap(request):
     dt = timezone.now()
     post_list = Post.objects.order_by('-pub_date').filter(pub_date__lte=dt).filter(visible=True)
-    template = loader.get_template('blog/sitemap.html')
-    context = RequestContext(request, {'post_list': post_list})
-    return HttpResponse(template.render(context))
+    template = get_template('blog/sitemap.html')
+    context = {'post_list': post_list}
+    return HttpResponse(template.render(context, request))
 
 
 def contact(request):
-    template = loader.get_template('blog/template.html')
-    context = RequestContext(request, {'active_page': 'imprint','index':True,'canonical_suffix': 'impressum/'})
-    return HttpResponse(template.render(context))
+    template = get_template('blog/template.html')
+    context = {'active_page': 'imprint','index':True,'canonical_suffix': 'impressum/'}
+    return HttpResponse(template.render(context, request))
